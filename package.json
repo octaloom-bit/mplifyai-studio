@@ -1,0 +1,14 @@
+{
+  "name": "mplifyai-studio",
+  "version": "2.0.0",
+  "private": true,
+  "description": "סטודיו לסרטוני talking-head: רעיון, תסריט, צילום, עריכה והערות. מקומי, בלי חשבונות.",
+  "scripts": {
+    "setup": "bash setup.sh",
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "hyperframes": "0.9.25"
+  },
+  "engines": { "node": ">=18" }
+}

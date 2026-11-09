@@ -1,0 +1,23 @@
+node_modules/
+.DS_Store
+*.tmp
+*.part
+# big or generated: stay on disk, not in git
+*.mp4
+*.mov
+*.MOV
+*.MP4
+*.wav
+projects/*/source/
+projects/*/renders/
+work/
+models/
+pipeline/sfx/
+assets/music/*
+!assets/music/README.md
+# private: arrives in the private pack (zip), never in this public repo
+projects/*
+!projects/.gitkeep
+brands/*/voice/
+brands/*/design-system/assets/photos/
+*private*.zip

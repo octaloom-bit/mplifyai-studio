@@ -1,0 +1,12 @@
+{
+  "name": "mplifyAI",
+  "title": "הסטודיו",
+  "logo": { "light": "logo-ink.svg", "dark": "logo-light.svg" },
+  "font": { "family": "IBM Plex Sans Hebrew", "css": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@400;500;700&display=swap" },
+  "light": { "bg": "#F6F7F8", "surface": "#FFFFFF", "text": "#0F1729", "muted": "#4A586E", "line": "#E1E7EF",
+             "accent": "#2463EB", "accent-ink": "#FFFFFF", "mark": "#DCEBFE", "mark-text": "#1842B4",
+             "ok": "#0F7B4B", "ok-bg": "#E3F5EC", "wait": "#8A5A00", "wait-bg": "#FFF1D6" },
+  "dark":  { "bg": "#090E1A", "surface": "#0F1729", "text": "#F8FAFC", "muted": "#A3B0C2", "line": "#1D283A",
+             "accent": "#61A6FA", "accent-ink": "#090E1A", "mark": "#16305A", "mark-text": "#BFDBFE",
+             "ok": "#5BD69A", "ok-bg": "#0E2A1E", "wait": "#F5C46B", "wait-bg": "#2B2210" }
+}

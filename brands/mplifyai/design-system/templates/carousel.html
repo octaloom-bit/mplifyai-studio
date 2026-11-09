@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>mplifyAI carousel template</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #444; font-family: var(--font); display: flex; flex-direction: column; align-items: center; gap: 40px; padding: 40px 0; }
+
+  /* ---------- slide shell 1080x1350 (4:5) ---------- */
+  .slide { width: 1080px; height: 1350px; position: relative; overflow: hidden; padding: 96px 96px 120px; display: flex; flex-direction: column; text-align: right; }
+  .ink   { background: var(--ink); color: var(--text-on-ink); }
+  .ink::before { content: ""; position: absolute; inset: 0; background-image: var(--grid); background-size: 72px 72px; pointer-events: none; }
+  .ink.glow::after { content: ""; position: absolute; width: 1100px; height: 900px; left: -300px; bottom: -350px; background: var(--glow-radial); pointer-events: none; }
+  .paper { background: var(--paper); color: var(--text); }
+  .slide > * { position: relative; z-index: 1; }
+
+  /* top row: eyebrow (right) + logo (left) */
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 88px; }
+  .eyebrow { font-family: var(--font); font-size: 28px; font-weight: 500; }
+  .ink .eyebrow { color: var(--glow); }
+  .paper .eyebrow { color: var(--blue); }
+  .logo { height: 38px; }
+  .m { font-family: var(--mono); }
+
+  /* type scale */
+  .h-hook { font-size: 112px; font-weight: 700; line-height: 1.04; letter-spacing: -.01em; }
+  .h1 { font-size: 76px; font-weight: 700; line-height: 1.12; }
+  .h2 { font-size: 68px; font-weight: 700; line-height: 1.15; }
+  .body { font-size: 44px; font-weight: 400; line-height: 1.55; margin-top: 44px; }
+  .paper .body { color: var(--text-muted); }
+  .ink .body { color: rgba(248,250,252,.82); }
+  .accent { color: var(--glow); }               /* on ink */
+  .paper .accent { color: var(--blue); }        /* on paper */
+  b { font-weight: 700; }
+  .ink b { color: var(--glow); }
+  .paper b { color: var(--blue); }
+  .marker { background: var(--marker); color: var(--blue-deep); padding: 0 .18em; border-radius: 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+  .rule { height: 1px; background: var(--ink-line); margin: 56px 0; }
+  .paper .rule { background: var(--line); }
+
+  /* tag pills (site hero) */
+  .pills { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 56px; }
+  .pill { border: 1.5px solid var(--ink-line); border-radius: var(--pill); padding: 14px 30px; font-size: 28px; font-weight: 500; }
+  .paper .pill { border-color: var(--line); background: var(--surface); }
+
+  /* numbered steps (site "איך אנחנו עובדים") */
+  .steps { display: flex; flex-direction: column; gap: 64px; margin-top: 88px; }
+  .step { display: flex; gap: 36px; align-items: flex-start; }
+  .num { flex: none; width: 104px; height: 104px; border-radius: 50%; border: 2px solid var(--blue); color: var(--blue); font-family: var(--mono); font-size: 36px; font-weight: 500; display: grid; place-items: center; }
+  .num.on { background: var(--blue); color: #fff; }
+  .step h3 { font-size: 52px; font-weight: 700; line-height: 1.2; }
+  .step p { font-size: 38px; line-height: 1.5; color: var(--text-muted); margin-top: 8px; }
+
+  /* card for screenshots / WhatsApp / mail */
+  .shot { margin-top: 56px; flex: 1; background: var(--surface); border-radius: 24px; box-shadow: var(--phone-shadow-dark); display: grid; place-items: center; color: #94A3B8; font-size: 30px; border: 2px dashed #CBD5E1; }
+
+  /* quote */
+  .quote-mark { font-family: var(--mono); font-size: 140px; line-height: .6; color: var(--glow); }
+
+  /* CTA button (site hero pill) */
+  .btn { display: inline-flex; align-items: center; gap: 18px; background: var(--blue); color: #fff; border-radius: var(--pill); padding: 30px 56px; font-size: 38px; font-weight: 700; margin-top: 64px; align-self: flex-start; }
+  .btn svg { width: 34px; height: 34px; }
+
+  /* footer on slide 1: photo + name (right), save (left) */
+  .footer { position: absolute; z-index: 1; bottom: 110px; right: 96px; left: 96px; display: flex; justify-content: space-between; align-items: center; }
+  .who { display: flex; align-items: center; gap: 22px; }
+  .who img { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; object-position: center 20%; border: 2px solid var(--ink-line); }
+  .who .name { font-size: 32px; font-weight: 700; }
+  .who .role { font-size: 25px; font-weight: 400; opacity: .75; }
+  .save { display: flex; align-items: center; gap: 12px; font-size: 25px; font-weight: 500; color: var(--glow); }
+  .save svg { width: 34px; height: 34px; }
+
+  /* progress dots */
+  .dots { position: absolute; z-index: 1; bottom: 52px; left: 0; right: 0; display: flex; justify-content: center; gap: 12px; }
+  .dots i { width: 12px; height: 12px; border-radius: 50%; background: currentColor; opacity: .22; }
+  .dots i.on { opacity: 1; width: 36px; border-radius: 6px; }
+  .ink .dots { color: var(--glow); }
+  .paper .dots { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<!-- 1 · HOOK (ink + glow). Bold, minimal, the hook owns the slide. -->
+<section class="slide ink glow" data-n="1">
+  <div class="top"><span class="eyebrow">אפיון לפני שבונים</span><img class="logo" src="../assets/logos/logo-light.svg" alt=""></div>
+  <h1 class="h-hook">בשיחה הראשונה<br>עם לקוח אני<br><span class="accent">כמעט לא מדבר<br>על טכנולוגיה</span></h1>
+  <div class="footer">
+    <div class="who"><img src="../assets/photos/dennis.webp" alt=""><div><div class="name">דניס ברצ׳בסקי</div><div class="role">מייסד mplifyAI</div></div></div>
+    <div class="save"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>לשמור לאחר כך</div>
+  </div>
+  <div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+</section>
+
+<!-- 2 · TENSION (paper, text-heavy) -->
+<section class="slide paper" data-n="2">
+  <div class="top"><span class="eyebrow"><span class="m">01</span> · מה אני רואה אצל לקוחות</span><img class="logo" src="../assets/logos/logo-ink.svg" alt=""></div>
+  <h2 class="h1">ה-ERP בדרך כלל עובד.<br><span class="marker">מה שמסביב לו</span><br>תוקע את הצוות</h2>
+  <p class="body">Priority, SAP, מה שזה לא יהיה, מהבחינה של ה-ERP הם סגורים. אבל כל מה שנכנס למערכת ויוצא ממנה עובר דרך אקסלים, מיילים והעתקה ידנית בין מסכים (ואת זה <b>אני לא אראה באף דמו</b>).</p>
+  <p class="body">אני רואה את זה רק כשאני שואל.</p>
+  <div class="dots"><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
+</section>
+
+<!-- 3 · VALUE: steps (paper) -->
+<section class="slide paper" data-n="3">
+  <div class="top"><span class="eyebrow"><span class="m">02</span> · השיחה הראשונה</span><img class="logo" src="../assets/logos/logo-ink.svg" alt=""></div>
+  <h2 class="h2">בגדול בגדול, זה מה שאני מנסה להבין</h2>
+  <div class="steps">
+    <div class="step"><span class="num on">01</span><div><h3>מה הבעיה היום?</h3><p>מה קורה בפועל, עוד לפני שמדברים על כלים.</p></div></div>
+    <div class="step"><span class="num">02</span><div><h3>מה ניסית עד היום?</h3><p>מה עבד, ומה לא.</p></div></div>
+    <div class="step"><span class="num">03</span><div><h3>לאן רוצים להגיע?</h3><p>מה השאיפות, מה המטרות.</p></div></div>
+    <div class="step"><span class="num">04</span><div><h3>איזה פתרון נראה לך שצריך?</h3><p>כי לפעמים בעל העסק כבר יודע.</p></div></div>
+  </div>
+  <div class="dots"><i></i><i></i><i class="on"></i><i></i><i></i><i></i></div>
+</section>
+
+<!-- 4 · LAYOUT BREAK: screenshot / WhatsApp card (ink) -->
+<section class="slide ink" data-n="4">
+  <div class="top"><span class="eyebrow"><span class="m">03</span> · ורק אז</span><img class="logo" src="../assets/logos/logo-light.svg" alt=""></div>
+  <h2 class="h2">אני יושב עם החבר׳ה הטכניים <span class="accent">ואז בונים</span></h2>
+  <div class="shot">כאן נכנס צילום מסך של מסמך אפיון אמיתי<br>(פרטי הלקוח מוסתרים)</div>
+  <div class="dots"><i></i><i></i><i></i><i class="on"></i><i></i><i></i></div>
+</section>
+
+<!-- 5 · DISTILLED MESSAGE (ink, quote) -->
+<section class="slide ink glow" data-n="5">
+  <div class="top"><span class="eyebrow">ומה שהכי קשה להגיד</span><img class="logo" src="../assets/logos/logo-light.svg" alt=""></div>
+  <div style="margin-top:auto;margin-bottom:auto">
+    <h2 class="h1">לפעמים הכלי<br>שלקוח צריך כבר קיים,<br><span class="accent">ואז הוא לא<br>צריך אותנו</span></h2>
+    <div class="rule"></div>
+    <div class="pills"><span class="pill">אוטומציות</span><span class="pill">חיבור מערכות</span><span class="pill">אפליקציות</span></div>
+  </div>
+  <div class="dots"><i></i><i></i><i></i><i></i><i class="on"></i><i></i></div>
+</section>
+
+<!-- 6 · CTA (paper), no name, no save -->
+<section class="slide paper" data-n="6">
+  <div class="top"><span class="eyebrow">שיחת התאמה, בלי עלות</span><img class="logo" src="../assets/logos/logo-ink.svg" alt=""></div>
+  <div style="margin-top:auto;margin-bottom:auto">
+    <h2 class="h1">יש לך תהליך<br><span class="accent">שתוקע את הצוות?</span></h2>
+    <p class="body">שיחה אחת, ונבין יחד אם מערכת AI נכונה לעסק שלך עכשיו. הלינק לקביעה בנעוצים בפרופיל.</p>
+    <span class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>לקביעת שיחה</span>
+  </div>
+  <div class="dots"><i></i><i></i><i></i><i></i><i></i><i class="on"></i></div>
+</section>
+
+</body>
+</html>

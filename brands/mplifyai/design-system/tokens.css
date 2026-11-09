@@ -1,0 +1,46 @@
+/* mplifyAI · Dennis Berchevsky design tokens
+   Source: mplifyai.com CSS (:root vars + computed styles), extracted 2026-11-07.
+   Edit values here only; templates import this file. */
+
+@font-face { font-family: "Plex Hebrew"; src: url("assets/fonts/IBMPlexSansHebrew-300.ttf"); font-weight: 300; }
+@font-face { font-family: "Plex Hebrew"; src: url("assets/fonts/IBMPlexSansHebrew-400.ttf"); font-weight: 400; }
+@font-face { font-family: "Plex Hebrew"; src: url("assets/fonts/IBMPlexSansHebrew-500.ttf"); font-weight: 500; }
+@font-face { font-family: "Plex Hebrew"; src: url("assets/fonts/IBMPlexSansHebrew-600.ttf"); font-weight: 600; }
+@font-face { font-family: "Plex Hebrew"; src: url("assets/fonts/IBMPlexSansHebrew-700.ttf"); font-weight: 700; }
+@font-face { font-family: "Plex Mono"; src: url("assets/fonts/IBMPlexMono-400.ttf"); font-weight: 400; }
+@font-face { font-family: "Plex Mono"; src: url("assets/fonts/IBMPlexMono-500.ttf"); font-weight: 500; }
+
+:root {
+  /* core */
+  --ink: #090E1A;          /* dark background (site hero) */
+  --ink-line: #1D283A;     /* borders / pills on dark */
+  --paper: #F6F7F8;        /* light background */
+  --surface: #FFFFFF;      /* cards on paper */
+  --text: #0F1729;         /* headings + body on light */
+  --text-muted: #344256;   /* secondary text on light */
+  --text-on-ink: #F8FAFC;  /* text on dark */
+  --line: #E1E7EF;         /* borders on light */
+
+  /* blue family */
+  --blue: #2463EB;         /* primary: buttons, accents on light, eyebrows on light */
+  --blue-hover: #3C83F6;
+  --glow: #61A6FA;         /* תכלת: accent words on dark (hero "בלי להעמיס") */
+  --marker: #DCEBFE;       /* highlight behind words on light */
+  --tint: #F0F6FF;         /* soft blue panel on light */
+  --blue-deep: #1842B4;    /* text on --marker */
+
+  /* type */
+  --font: "Plex Hebrew", "IBM Plex Sans Hebrew", system-ui, sans-serif;
+  --mono: "Plex Mono", "IBM Plex Mono", monospace; /* digits + Latin only. Hebrew never in mono */
+
+  /* shape */
+  --radius: 14px;
+  --radius-btn: 12px;
+  --pill: 9999px;
+
+  /* the only "atmosphere" the site uses, on dark only */
+  --grid: linear-gradient(rgba(97,166,250,.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(97,166,250,.05) 1px, transparent 1px);
+  --glow-radial: radial-gradient(ellipse at center, rgba(36,99,235,.14), transparent 68%);
+  --phone-shadow-dark: 0 28px 60px -18px rgba(9,14,26,.8), 0 0 0 1px rgba(97,166,250,.24), 0 0 30px -12px rgba(36,99,235,.25);
+}

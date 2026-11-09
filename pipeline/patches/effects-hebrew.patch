@@ -1,0 +1,96 @@
+diff --git a/scripts/fx.py b/scripts/fx.py
+index d412322..7bdd6a1 100755
+--- a/scripts/fx.py
++++ b/scripts/fx.py
+@@ -57,11 +57,51 @@ def rgb(v, default):
+     v = str(v).lstrip('#'); return tuple(int(v[i:i + 2], 16) for i in (0, 2, 4))
+ 
+ 
++# ---------- Hebrew support (local patch) ----------
++# Any string containing Hebrew is drawn with a matching Hebrew font from fonts/he/.
++# Pillow's raqm layout (with fribidi) handles right-to-left order and mixed Hebrew/English/numbers.
++HEB_FONT = {k: os.path.join(ROOT, 'fonts', 'he', v) for k, v in {
++    'bold': 'Heebo-Black.ttf', 'anton': 'Heebo-ExtraBold.ttf', 'uib': 'Heebo-Black.ttf', 'montb': 'Heebo-ExtraBold.ttf',
++    'mont': 'Heebo-Bold.ttf', 'monts': 'Heebo-Bold.ttf', 'ui': 'Heebo-Medium.ttf', 'uim': 'Heebo-Regular.ttf',
++    'mono': 'Rubik-Medium.ttf', 'hand': 'Rubik-Bold.ttf',
++    'serif': 'DavidLibre-Medium.ttf', 'didone': 'DavidLibre-Medium.ttf', 'didoneb': 'DavidLibre-Bold.ttf', 'didonei': 'DavidLibre-Medium.ttf'}.items()}
++# Brand override: FX_HEB_FONT=birzia (or any family with <Family>-Black/-Bold/-Medium files in fonts/he/) swaps every Hebrew font.
++_fam = os.environ.get('FX_HEB_FONT', '').strip()
++if _fam:
++    _fam = _fam[:1].upper() + _fam[1:].lower()
++    def _pick_file(weight):
++        for ext in ('.ttf', '.otf', '.woff2', '.woff'):
++            p = os.path.join(ROOT, 'fonts', 'he', f'{_fam}-{weight}{ext}')
++            if os.path.exists(p): return p
++        return None
++    for _k in list(HEB_FONT):
++        _w = 'Black' if _k in ('bold', 'anton', 'uib', 'montb', 'didoneb') else 'Medium' if _k in ('ui', 'uim', 'serif', 'didone', 'didonei') else 'Bold'
++        _p = _pick_file(_w) or _pick_file('Bold') or _pick_file('Black')
++        if _p: HEB_FONT[_k] = _p
++def has_heb(s): return isinstance(s, str) and any('֐' <= ch <= '׿' for ch in s)
++
++
++class HebFallbackFont(ImageFont.FreeTypeFont):
++    """Behaves like the original font, but routes Hebrew strings to a Hebrew font."""
++    def __init__(self, path, size, heb_path):
++        super().__init__(path, size)
++        self._heb = ImageFont.truetype(heb_path, size) if heb_path and os.path.exists(heb_path) else None
++    def _pick(self, text): return self._heb if (self._heb is not None and has_heb(text)) else None
++    def getbbox(self, text, *a, **k):
++        h = self._pick(text); return h.getbbox(text, *a, **k) if h else super().getbbox(text, *a, **k)
++    def getlength(self, text, *a, **k):
++        h = self._pick(text); return h.getlength(text, *a, **k) if h else super().getlength(text, *a, **k)
++    def getmask(self, text, *a, **k):
++        h = self._pick(text); return h.getmask(text, *a, **k) if h else super().getmask(text, *a, **k)
++    def getmask2(self, text, *a, **k):
++        h = self._pick(text); return h.getmask2(text, *a, **k) if h else super().getmask2(text, *a, **k)
++
++
+ _fc = {}
+ def font(kind, size):
+     k = (kind, int(size))
+     if k not in _fc:
+-        f = ImageFont.truetype(FONT[kind], max(6, int(size)))
++        f = HebFallbackFont(FONT[kind], max(6, int(size)), HEB_FONT.get(kind))
+         if kind in WGHT:
+             try: f.set_variation_by_axes(list(WGHT[kind]))
+             except Exception: pass
+@@ -2125,14 +2165,18 @@ def fx_wave_trim(c, e):
+ @effect('huge-strike', 'one huge serif word fills the wall behind you, then a red line crosses it out')
+ def fx_huge_strike(c, e):
+     al = fade(c, e)
+-    t = cached(e, 't', lambda: fit_text(e.o.get('text', '8 HOURS'), c.W * 0.9, 'didone', int(c.W * 0.28), fill=CREAMY, shadow=10))
++    word = e.o.get('text', '8 HOURS'); rtl = has_heb(word)
++    t = cached(e, 't', lambda: fit_text(word, c.W * 0.9, e.o.get('font', 'didone'), int(c.W * 0.28), fill=rgb(e.o.get('color'), CREAMY), shadow=10))
+     cw = int(t.width * ease_out(c.lt / 0.35)); cy = above_head(c, t.height)
+-    if cw > 2: place(c, t.crop((0, 0, cw, t.height)), c.W / 2 - (t.width - cw) / 2, cy, 1, 0, al, behind=True)
++    if cw > 2:
++        if rtl: place(c, t.crop((t.width - cw, 0, t.width, t.height)), c.W / 2 + (t.width - cw) / 2, cy, 1, 0, al, behind=True)  # reveal from the right
++        else: place(c, t.crop((0, 0, cw, t.height)), c.W / 2 - (t.width - cw) / 2, cy, 1, 0, al, behind=True)
+     at = float(e.o.get('at', 0.6)); k = ease_out((c.lt - at) / 0.18)
+     if k > 0:
+         lay = Image.new('RGBA', (c.W, c.H), (0, 0, 0, 0)); x0, x1 = c.W / 2 - t.width * 0.46, c.W / 2 + t.width * 0.46
++        if rtl: x0, x1 = x1, x0  # strike right to left
+         pts = [(x0 + (x1 - x0) * u, cy + t.height * 0.04 - u * t.height * 0.05 + math.sin(u * 19) * c.W * 0.002) for u in np.linspace(0, 1, 40)]
+-        hand_path(ImageDraw.Draw(lay), pts, RED + (255,), max(6, c.W // 80), k); comp(c, to_np(lay), 0, 0, al, behind=True)
++        hand_path(ImageDraw.Draw(lay), pts, rgb(e.o.get('line'), RED) + (255,), max(6, c.W // 80), k); comp(c, to_np(lay), 0, 0, al, behind=True)
+ 
+ 
+ @effect('crayon-write', 'a red crayon writes your word behind your head, then underlines it')
+diff --git a/scripts/words.py b/scripts/words.py
+index fe3e26c..1d4f6ae 100755
+--- a/scripts/words.py
++++ b/scripts/words.py
+@@ -21,7 +21,11 @@ except ImportError:
+         subprocess.run([sys.executable, '-m', 'pip', 'install', '-q', 'faster-whisper'], check=True)
+         from faster_whisper import WhisperModel
+     model = WhisperModel(os.environ.get('WHISPER_MODEL', 'base'), device='cpu', compute_type='int8')
+-    segs, _ = model.transcribe(src, word_timestamps=True, vad_filter=True)
++    # Local patch: decode audio with ffmpeg (avoids PyAV version clashes). WHISPER_LANG=he forces Hebrew.
++    import numpy as np
++    pcm = subprocess.run(['ffmpeg', '-v', 'error', '-i', src, '-ac', '1', '-ar', '16000', '-f', 's16le', '-'], capture_output=True, check=True).stdout
++    audio = np.frombuffer(pcm, np.int16).astype(np.float32) / 32768.0
++    segs, _ = model.transcribe(audio, word_timestamps=True, vad_filter=True, language=os.environ.get('WHISPER_LANG') or None)
+     words = [{'w': w.word.strip(), 's': round(w.start, 2), 'e': round(w.end, 2)} for s in segs for w in (s.words or [])]
+ 
+ json.dump(words, open(out, 'w'), indent=0)

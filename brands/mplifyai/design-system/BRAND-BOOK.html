@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mplifyAI Brand Book</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  @page { size: A4 landscape; margin: 0; }
+  body { font-family: var(--font); color: var(--text); background: var(--paper); }
+  .page { width: 297mm; height: 210mm; padding: 18mm 20mm; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; }
+  .page.ink { background: var(--ink); color: var(--text-on-ink); }
+  .page.ink::before { content: ""; position: absolute; inset: 0; background-image: var(--grid); background-size: 40px 40px; }
+  .page.ink::after { content: ""; position: absolute; width: 700px; height: 600px; left: -150px; bottom: -250px; background: var(--glow-radial); }
+  .page > * { position: relative; z-index: 1; }
+
+  .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9mm; }
+  .head img { height: 22px; }
+  .eyebrow { font-size: 13px; font-weight: 500; color: var(--blue); }
+  .ink .eyebrow { color: var(--glow); }
+  .m { font-family: var(--mono); }
+  h1 { font-size: 64px; font-weight: 700; line-height: 1.05; }
+  h2 { font-size: 34px; font-weight: 700; line-height: 1.15; margin-bottom: 3mm; }
+  .lead { font-size: 16px; line-height: 1.6; color: var(--text-muted); max-width: 170mm; }
+  .ink .lead { color: rgba(248,250,252,.8); }
+  .accent { color: var(--glow); }
+  .foot { position: absolute; bottom: 10mm; left: 20mm; right: 20mm; display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); z-index: 1; }
+  .ink .foot { color: rgba(248,250,252,.5); }
+
+  /* colors */
+  .swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5mm; margin-top: 8mm; }
+  .sw { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+  .sw .chip { height: 34mm; }
+  .sw .meta { padding: 3mm 4mm; font-size: 12px; line-height: 1.5; }
+  .sw .meta b { display: block; font-size: 14px; }
+  .sw .meta .m { color: var(--text-muted); }
+  .rules { margin-top: 7mm; display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 10mm; font-size: 13.5px; line-height: 1.55; }
+  .rules li { list-style: none; padding-right: 5mm; position: relative; }
+  .rules li::before { content: ""; position: absolute; right: 0; top: .6em; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+
+  /* type */
+  .typegrid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 12mm; margin-top: 6mm; flex: 1; }
+  .specimen .big { font-size: 96px; font-weight: 700; line-height: 1; }
+  .specimen .row { display: flex; gap: 6mm; align-items: baseline; border-top: 1px solid var(--line); padding: 3.2mm 0; }
+  .specimen .row span:first-child { width: 34mm; flex: none; font-size: 12px; color: var(--text-muted); }
+  .weights { font-size: 30px; line-height: 1.5; }
+
+  /* logos */
+  .logos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6mm; margin-top: 6mm; }
+  .lg { border-radius: var(--radius); height: 44mm; display: flex; align-items: center; justify-content: center; gap: 14mm; border: 1px solid var(--line); }
+  .lg img.w { height: 46px; } .lg img.i { height: 46px; }
+  .lg.dark { background: var(--ink); border-color: var(--ink); }
+  .lg.light { background: var(--surface); }
+  .lg.blue { background: var(--blue); border-color: var(--blue); }
+  .lg.tint { background: var(--paper); }
+  .cap { font-size: 12px; color: var(--text-muted); margin-top: 2mm; }
+
+  /* carousel */
+  .slides { display: flex; gap: 4mm; margin-top: 6mm; }
+  .slides img { width: calc((100% - 20mm) / 6); border-radius: 8px; box-shadow: 0 6px 18px -8px rgba(9,14,26,.35); }
+  .cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8mm; margin-top: 7mm; font-size: 13px; line-height: 1.55; }
+  .cols3 h3 { font-size: 16px; margin-bottom: 1.5mm; }
+  table { width: 100%; border-collapse: collapse; margin-top: 6mm; font-size: 13px; }
+  th, td { text-align: right; padding: 2.6mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-weight: 700; background: var(--surface); }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: middle; margin-left: 4px; border: 1px solid var(--line); }
+
+  /* cover */
+  .banner { width: 100%; border-radius: 10px; margin-top: 8mm; box-shadow: 0 10px 30px -12px rgba(0,0,0,.6); }
+  .zones { position: relative; margin-top: 8mm; }
+  .zones img { width: 100%; border-radius: 10px; display: block; }
+  .zones .z { position: absolute; bottom: 0; width: 27.8%; height: 55%; border: 2px dashed #F87171; background: rgba(248,113,113,.12); border-radius: 0 0 10px 10px; display: grid; place-items: center; font-size: 12px; color: #FCA5A5; }
+
+  .pf { display:grid; grid-template-columns: 1fr 1.6fr; gap: 12mm; margin-top: 8mm; align-items:start; }
+  .pf .av { display:flex; gap:8mm; }
+  .pf .av img { width: 46mm; height:46mm; border-radius:50%; }
+  .pf .feat { width:100%; border-radius:10px; box-shadow: 0 10px 30px -12px rgba(9,14,26,.4); }
+  .dd { display:grid; grid-template-columns: 52mm 1fr 1fr; gap: 4mm 6mm; margin-top: 6mm; align-items:stretch; }
+  .dd .lbl h3 { font-size:15px; margin-bottom:1.5mm; } .dd .lbl p { font-size:12px; line-height:1.5; color: var(--text-muted); }
+  .ex { position:relative; height: 40mm; border-radius: 8px; overflow:hidden; border:1px solid var(--line); display:flex; flex-direction:column; justify-content:center; padding: 0 6mm; }
+  .ex .tag { position:absolute; top:2.5mm; left:2.5mm; width:7mm; height:7mm; border-radius:50%; display:grid; place-items:center; font-size:13px; font-weight:700; color:#fff; z-index:3; }
+  .ex.ok { outline: 2px solid #16A34A; outline-offset:-2px; } .ex.ok .tag { background:#16A34A; }
+  .ex.no { outline: 2px solid #DC2626; outline-offset:-2px; } .ex.no .tag { background:#DC2626; }
+  .ex.p { background: var(--paper); color: var(--text); } .ex.k { background: var(--ink); color: var(--text-on-ink); border-color: var(--ink); }
+  .ex .t { font-size: 19px; font-weight:700; line-height:1.2; }
+  .mk { background: var(--marker); color: var(--blue-deep); padding: 0 3px; }
+</style>
+</head>
+<body>
+
+<!-- 1 · Cover -->
+<section class="page ink">
+  <div class="head"><span class="eyebrow">Design System · <span class="m">v1 · 11.2026</span></span><img src="assets/logos/logo-light.svg" alt=""></div>
+  <div style="margin-top:auto;margin-bottom:auto">
+    <h1>השפה הוויזואלית<br><span class="accent">של mplifyAI</span></h1>
+    <p class="lead" style="margin-top:7mm">צבעים, טיפוגרפיה, לוגו, קרוסלות ובאנר ללינקדאין של דניס ברצ׳בסקי. נגזר מ-mplifyai.com, כדי שכל תוכן שיוצא ייראה כמו האתר.</p>
+  </div>
+  <div class="foot"><span>mplifyai.com</span><span>הוכן על ידי OctaLoom</span></div>
+</section>
+
+<!-- 2 · Colors -->
+<section class="page">
+  <div class="head"><span class="eyebrow"><span class="m">01</span> · צבע</span><img src="assets/logos/logo-ink.svg" alt=""></div>
+  <h2>שחור-לבן, עם כחול ותכלת כאקסנט</h2>
+  <p class="lead">רוב השטח כהה או בהיר ונקי. הכחול והתכלת מסמנים את מה שחשוב: מילה בכותרת, כפתור, מספר שלב.</p>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#090E1A"></div><div class="meta"><b>Ink</b><span class="m">#090E1A</span><br>רקע כהה</div></div>
+    <div class="sw"><div class="chip" style="background:#F6F7F8"></div><div class="meta"><b>Paper</b><span class="m">#F6F7F8</span><br>רקע בהיר</div></div>
+    <div class="sw"><div class="chip" style="background:#2463EB"></div><div class="meta"><b>Blue</b><span class="m">#2463EB</span><br>כפתורים, הדגשה על בהיר</div></div>
+    <div class="sw"><div class="chip" style="background:#61A6FA"></div><div class="meta"><b>Glow · תכלת</b><span class="m">#61A6FA</span><br>הדגשה על כהה בלבד</div></div>
+    <div class="sw"><div class="chip" style="background:#DCEBFE"></div><div class="meta"><b>Marker</b><span class="m">#DCEBFE</span><br>מרקר מאחורי מילים</div></div>
+    <div class="sw"><div class="chip" style="background:#0F1729"></div><div class="meta"><b>Text</b><span class="m">#0F1729</span><br>טקסט על בהיר</div></div>
+    <div class="sw"><div class="chip" style="background:#344256"></div><div class="meta"><b>Muted</b><span class="m">#344256</span><br>גוף משני</div></div>
+    <div class="sw"><div class="chip" style="background:#F8FAFC"></div><div class="meta"><b>On Ink</b><span class="m">#F8FAFC</span><br>טקסט על כהה</div></div>
+    <div class="sw"><div class="chip" style="background:#1D283A"></div><div class="meta"><b>Ink Line</b><span class="m">#1D283A</span><br>קווים על כהה</div></div>
+    <div class="sw"><div class="chip" style="background:#E1E7EF"></div><div class="meta"><b>Line</b><span class="m">#E1E7EF</span><br>קווים על בהיר</div></div>
+  </div>
+  <ul class="rules">
+    <li>תכלת רק על רקע כהה. על בהיר משתמשים בכחול.</li>
+    <li>גרדיאנט יחיד: הגריד העדין והזוהר הכחול, ורק על כהה.</li>
+    <li>שטוח: בלי צללים ובלי זכוכית. צל רק סביב צילום מסך.</li>
+    <li>מילה אחת או שתיים מודגשות בכל שקף, לא יותר.</li>
+  </ul>
+  <div class="foot"><span>mplifyAI · Design System</span><span class="m">02</span></div>
+</section>
+
+<!-- 3 · Type -->
+<section class="page">
+  <div class="head"><span class="eyebrow"><span class="m">02</span> · טיפוגרפיה</span><img src="assets/logos/logo-ink.svg" alt=""></div>
+  <h2>IBM Plex Sans Hebrew</h2>
+  <p class="lead">פונט אחד לעברית ולאנגלית, כמו באתר. Plex Mono רק לספרות ולטקסט לטיני קצר.</p>
+  <div class="typegrid">
+    <div class="specimen">
+      <div class="big">לשרת יותר<br><span style="color:var(--blue)">בלי להעמיס</span></div>
+      <div style="margin-top:8mm">
+        <div class="row"><span>הוק · <span class="m">112 / 700</span></span><b style="font-size:26px">ה-ERP בדרך כלל עובד</b></div>
+        <div class="row"><span>כותרת · <span class="m">76 / 700</span></span><b style="font-size:21px">מה אני מנסה להבין בשיחה הראשונה</b></div>
+        <div class="row"><span>גוף · <span class="m">44 / 400</span></span><span style="font-size:16px">מה שנכנס למערכת ויוצא ממנה עובר דרך אקסלים.</span></div>
+        <div class="row"><span>תווית · <span class="m">28 / 500</span></span><span style="font-size:13px;color:var(--blue);font-weight:500"><span class="m">01</span> · השיחה הראשונה</span></div>
+      </div>
+      <p class="cap">הגדלים לקנבס של 1080px.</p>
+    </div>
+    <div>
+      <div class="weights">
+        <div style="font-weight:300">Light 300 · אבגד</div>
+        <div style="font-weight:400">Regular 400 · אבגד</div>
+        <div style="font-weight:500">Medium 500 · אבגד</div>
+        <div style="font-weight:600">SemiBold 600 · אבגד</div>
+        <div style="font-weight:700">Bold 700 · אבגד</div>
+      </div>
+      <div style="font-family:var(--mono);font-size:34px;color:var(--blue);margin-top:8mm">01 02 03 · Mono</div>
+      <p class="cap" style="margin-top:4mm">Plex Mono לא תומך בעברית. תוויות בעברית נשארות ב-Plex Hebrew.</p>
+    </div>
+  </div>
+  <div class="foot"><span>mplifyAI · Design System</span><span class="m">03</span></div>
+</section>
+
+<!-- 4 · Logo -->
+<section class="page">
+  <div class="head"><span class="eyebrow"><span class="m">03</span> · לוגו</span><img src="assets/logos/logo-ink.svg" alt=""></div>
+  <h2>לוגו מלא ואייקון</h2>
+  <p class="lead">לבן על כהה, Ink על בהיר. הגג לבד כשאין מקום לשם. לא למתוח ולא לצבוע בצבע אחר.</p>
+  <div class="logos">
+    <div><div class="lg dark"><img class="w" src="assets/logos/logo-light.svg"><img class="i" src="assets/logos/icon-light.svg"></div><p class="cap">logo-light / icon-light · על Ink</p></div>
+    <div><div class="lg light"><img class="w" src="assets/logos/logo-ink.svg"><img class="i" src="assets/logos/icon-ink.svg"></div><p class="cap">logo-ink / icon-ink · על בהיר</p></div>
+    <div><div class="lg blue"><img class="w" src="assets/logos/logo-light.svg"><img class="i" src="assets/logos/icon-light.svg"></div><p class="cap">על כחול · לבן בלבד</p></div>
+    <div><div class="lg dark"><img class="w" src="assets/logos/logo-glow.svg"><img class="i" src="assets/logos/icon-blue.svg"></div><p class="cap">logo-glow / icon-blue · נקודתי בלבד</p></div>
+  </div>
+  <div class="foot"><span>mplifyAI · Design System</span><span class="m">04</span></div>
+</section>
+
+<!-- 5 · Carousel -->
+<section class="page">
+  <div class="head"><span class="eyebrow"><span class="m">04</span> · קרוסלות</span><img src="assets/logos/logo-ink.svg" alt=""></div>
+  <h2>1080×1350, כהה ובהיר לסירוגין</h2>
+  <p class="lead">שקף שנראה כמו הקודם הורג את התנופה. מחליפים רקע ופריסה בכל שקף: הוק, טקסט, שלבים, צילום מסך, מסר, CTA. הקרוסלה כתובה בקול של דניס, בגוף ראשון, ולכן בלי ציטוטים שלו על עצמו.</p>
+  <div class="slides">
+    <img src="out/sample-carousel/slide-01.png"><img src="out/sample-carousel/slide-02.png"><img src="out/sample-carousel/slide-03.png"><img src="out/sample-carousel/slide-04.png"><img src="out/sample-carousel/slide-05.png"><img src="out/sample-carousel/slide-06.png">
+  </div>
+  <div class="cols3">
+    <div><h3>מבנה</h3>1 הוק · 2 מתח · 3-7 ערך, וכל שקף נגמר במשהו שפותח את הבא · 8 התובנה המתקדמת · 9 המסר המזוקק · 10 CTA.</div>
+    <div><h3>שקף ראשון</h3>הוק גדול, השורה האחרונה בתכלת. פוטר: תמונה עגולה, שם ותפקיד מימין, ״לשמור לאחר כך״ משמאל.</div>
+    <div><h3>שקף אחרון</h3>כפתור כחול מעוגל עם חץ, ״לקביעת שיחה״. פנייה ביחיד, ובלי שם ובלי Save.</div>
+  </div>
+  <div class="foot"><span>mplifyAI · Design System</span><span class="m">05</span></div>
+</section>
+
+<!-- 6 · Carousel components table -->
+<section class="page">
+  <div class="head"><span class="eyebrow"><span class="m">05</span> · רכיבי שקף</span><img src="assets/logos/logo-ink.svg" alt=""></div>
+  <h2>Ink ו-Paper</h2>
+  <table>
+    <tr><th></th><th>Ink · כהה</th><th>Paper · בהיר</th></tr>
+    <tr><td>רקע</td><td><span class="dot" style="background:#090E1A"></span>#090E1A + גריד, זוהר בשקפים מרכזיים</td><td><span class="dot" style="background:#F6F7F8"></span>#F6F7F8 שטוח</td></tr>
+    <tr><td>כותרת</td><td><span class="dot" style="background:#F8FAFC"></span>#F8FAFC · 700</td><td><span class="dot" style="background:#0F1729"></span>#0F1729 · 700</td></tr>
+    <tr><td>הדגשה</td><td><span class="dot" style="background:#61A6FA"></span>תכלת #61A6FA</td><td><span class="dot" style="background:#2463EB"></span>כחול #2463EB או מרקר #DCEBFE</td></tr>
+    <tr><td>גוף</td><td>לבן 82%</td><td><span class="dot" style="background:#344256"></span>#344256</td></tr>
+    <tr><td>תווית עליונה</td><td>תכלת, מספר ב-Mono</td><td>כחול, מספר ב-Mono</td></tr>
+    <tr><td>מתי</td><td>הוק, מסר מזוקק, שבירת פריסה</td><td>הסבר, שלבים, CTA</td></tr>
+    <tr><td>רכיבים</td><td colspan="2">עיגולי שלבים ממוספרים · פילים במסגרת דקה · כרטיס צילום מסך עם צל · כפתור כחול מעוגל · נקודות התקדמות במרכז התחתון · אייקונים בסגנון lucide, בלי אמוג׳י</td></tr>
+  </table>
+  <div class="foot"><span>mplifyAI · Design System</span><span class="m">06</span></div>
+</section>
+
+<!-- 7 · LinkedIn cover -->
+<section class="page ink">
+  <div class="head"><span class="eyebrow"><span class="m">06</span> · באנר לינקדאין</span><img src="assets/logos/logo-light.svg" alt=""></div>
+  <h2>1584×396, הטקסט ברצועה המרכזית</h2>
+  <p class="lead">הפרופיל של דניס בממשק באנגלית, אז תמונת הפרופיל יושבת למטה משמאל. הטקסט ברצועה המרכזית, דניס בצד ימין, ושום טקסט לא נכנס לאזור המסומן.</p>
+  <div class="zones" style="margin-top:12mm">
+    <img src="out/cover/cover@2x.png">
+    <div class="z" style="left:0">תמונת הפרופיל</div>
+  </div>
+  <div class="foot"><span>mplifyAI · Design System</span><span class="m">07</span></div>
+</section>
+
+
+<section class="page">
+  <div class="head"><span class="eyebrow"><span class="m">07</span> · תמונת פרופיל ו-Featured</span><img src="assets/logos/logo-ink.svg" alt=""></div>
+  <h2>דניס על תכלת, ופריט ״קובעים שיחה״</h2>
+  <p class="lead">תמונת הפרופיל: ראש וכתפיים, חיוך, חולצה לבנה, על רקע התכלת של mplifyAI. אותה תמונה כמו בבאנר, כדי שהפנים יהיו זהים בכל מקום. כרטיס ה-Featured: 1200×627, טקסט בצד שמאל ודניס מצביע עליו.</p>
+  <div class="pf">
+    <div><div class="av"><img src="out/profile-photo/profile-A-glow.jpg"><img src="out/profile-photo/profile-B-deeper.jpg"></div><p class="cap" style="margin-top:3mm">תכלת בהיר (מומלץ, בולט על הבאנר הכהה) או כחול</p></div>
+    <div><img class="feat" src="out/featured-call/featured-call@2x.png"><p class="cap" style="margin-top:3mm">Featured · לינק ל-Calendly · פנייה ביחיד</p></div>
+  </div>
+  <div class="foot"><span>mplifyAI · Design System</span><span class="m">08</span></div>
+</section>
+
+<section class="page">
+  <div class="head"><span class="eyebrow"><span class="m">08</span> · מותר ואסור</span><img src="assets/logos/logo-ink.svg" alt=""></div>
+  <h2>צבע והדגשה</h2>
+  <div class="dd">
+    <div class="lbl"><h3>הדגשה על רקע בהיר</h3><p>על בהיר מדגישים בכחול. תכלת על לבן כמעט לא נקרא.</p></div>
+    <div class="ex p ok"><span class="tag">✓</span><div class="t">מה שמסביב ל-ERP<br><span style="color:var(--blue)">תוקע את הצוות</span></div></div>
+    <div class="ex p no"><span class="tag">✕</span><div class="t">מה שמסביב ל-ERP<br><span style="color:var(--glow)">תוקע את הצוות</span></div></div>
+    <div class="lbl"><h3>כמה מדגישים</h3><p>מילה אחת או שתיים בכל שקף. כשהכול מודגש, שום דבר לא בולט.</p></div>
+    <div class="ex p ok"><span class="tag">✓</span><div class="t">בשיחה הראשונה אני כמעט לא מדבר <span class="mk">על טכנולוגיה</span></div></div>
+    <div class="ex p no"><span class="tag">✕</span><div class="t"><span class="mk">בשיחה</span> הראשונה <span style="color:var(--blue)">אני</span> כמעט <span class="mk">לא מדבר</span> על <span style="color:#DC2626">טכנולוגיה</span></div></div>
+    <div class="lbl"><h3>רקע</h3><p>כהה עם גריד עדין, או בהיר ונקי. בלי גרדיאנט צבעוני, ניאון או אפקט זכוכית.</p></div>
+    <div class="ex k ok" style="background-image:var(--grid);background-size:24px 24px"><span class="tag">✓</span><div class="t">ה-ERP בדרך כלל עובד.<br><span style="color:var(--glow)">מה שמסביב לו לא</span></div></div>
+    <div class="ex no" style="background:linear-gradient(135deg,#7C3AED,#EC4899 55%,#F59E0B);color:#fff;border:0"><span class="tag">✕</span><div style="background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.5);border-radius:10px;padding:3mm 4mm"><div class="t" style="text-shadow:0 0 12px #fff">ה-ERP בדרך כלל עובד.<br>מה שמסביב לו לא</div></div></div>
+  </div>
+  <div class="foot"><span>mplifyAI · Design System</span><span class="m">09</span></div>
+</section>
+
+<section class="page">
+  <div class="head"><span class="eyebrow"><span class="m">09</span> · מותר ואסור</span><img src="assets/logos/logo-ink.svg" alt=""></div>
+  <h2>לוגו, תמונות ובאנר</h2>
+  <div class="dd">
+    <div class="lbl"><h3>לוגו</h3><p>לבן על כהה, Ink על בהיר, בפרופורציות המקוריות. לא למתוח ולא לצבוע.</p></div>
+    <div class="ex k ok" style="align-items:center"><span class="tag">✓</span><img src="assets/logos/logo-light.svg" style="height:36px"></div>
+    <div class="ex p no" style="align-items:center"><span class="tag">✕</span><img src="assets/logos/logo-blue.svg" style="height:22px;width:88%;object-fit:fill;filter:hue-rotate(140deg) saturate(3)"></div>
+    <div class="lbl"><h3>תמונות</h3><p>דניס אמיתי. בלי רובוטים, מוחות זוהרים, אמוג׳י וקופי של ״העתיד כבר כאן״.</p></div>
+    <div class="ex k ok" style="flex-direction:row;align-items:center;gap:5mm;justify-content:flex-start"><span class="tag">✓</span><img src="assets/photos/dennis-arms.png" style="height:38mm;align-self:flex-end"><div class="t" style="font-size:16px">בשיחה הראשונה<br><span style="color:var(--glow)">אני שואל</span></div></div>
+    <div class="ex no" style="background:#0B1026;color:#fff;align-items:center;text-align:center;border:0"><span class="tag">✕</span><div style="font-size:34px">🤖🧠✨🚀</div><div class="t" style="font-size:16px;color:#22D3EE;text-shadow:0 0 10px #22D3EE">העתיד של ה-AI כבר כאן!!</div></div>
+    <div class="lbl"><h3>באנר</h3><p>הטקסט ברצועה המרכזית. בפינה השמאלית התחתונה יושבת תמונת הפרופיל ומסתירה כל מה שנמצא שם.</p></div>
+    <div class="ex ok" style="padding:0;justify-content:center;border:0;background:var(--ink)"><span class="tag">✓</span><img src="out/cover/cover.png" style="width:100%"><div style="position:absolute;left:4%;bottom:5mm;width:14mm;height:14mm;border-radius:50%;background:#cfd6df;border:2px solid #fff"></div></div>
+    <div class="ex k no" style="padding:0;border:0"><span class="tag">✕</span><div style="position:absolute;left:5mm;bottom:9mm;font-weight:700;font-size:14px;line-height:1.2;text-align:left">לגדול בלי לגייס<br><span style="color:var(--glow)">עוד עובדים</span></div><div style="position:absolute;left:4%;bottom:5mm;width:14mm;height:14mm;border-radius:50%;background:#cfd6df;border:2px solid #fff"></div></div>
+  </div>
+  <div class="foot"><span>mplifyAI · Design System</span><span class="m">10</span></div>
+</section>
+
+<!-- 8 · Boundaries -->
+<section class="page">
+  <div class="head"><span class="eyebrow"><span class="m">10</span> · תמונות וגבולות</span><img src="assets/logos/logo-ink.svg" alt=""></div>
+  <h2>מה נכנס לוויזואל ומה לא</h2>
+  <div class="cols3" style="margin-top:10mm;font-size:14.5px">
+    <div><h3>כן</h3>דניס אמיתי מול מצלמה, עם קשר עין, לפחות פוסט אחד בשבוע. צילומי מסך אמיתיים בהסכמה ועם פרטים מוסתרים. גרפיקה שנבנית מהתבניות האלה. תמונה של דניס שעובדה ב-AI מתוך צילום אמיתי שלו, רק אחרי שהוא אישר שהיא נראית כמוהו.</div>
+    <div><h3>לא</h3>תמונות AI גנריות (רובוטים, מוחות זוהרים, אנשים שלא קיימים). אמוג׳י דקורטיבי. גרדיאנטים צבעוניים, ניאון, זכוכית. תכלת על רקע בהיר.</div>
+    <div><h3>רק באישור</h3>מסכי האפליקציה של הלקוח: אחרי ההשקה, באישור הלקוח ועל נתוני דמו. שגב בתמונה: אחרי האישור שלו.</div>
+  </div>
+  <div class="foot"><span>mplifyAI · Design System</span><span class="m">11</span></div>
+</section>
+
+</body>
+</html>

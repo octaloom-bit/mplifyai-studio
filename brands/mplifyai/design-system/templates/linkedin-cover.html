@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Dennis LinkedIn cover</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #444; padding: 40px; font-family: var(--font); }
+
+  /* LinkedIn personal cover: 1584x396.
+     Safe zones: the profile photo covers the bottom-left (English UI) or bottom-right (Hebrew UI),
+     roughly 0-420px from each side in the bottom 55%. Mobile crops the sides.
+     So text sits in the middle band, logo top-left above the photo. */
+  .cover { width: 1584px; height: 396px; position: relative; overflow: hidden; background: var(--ink); color: var(--text-on-ink); direction: rtl; }
+  .cover::before { content: ""; position: absolute; inset: 0; background-image: var(--grid); background-size: 44px 44px; }
+  .cover::after { content: ""; position: absolute; width: 900px; height: 700px; left: 700px; top: -260px; background: var(--glow-radial); }
+  .cover > * { position: relative; z-index: 1; }
+
+  .copy { position: absolute; top: 74px; right: 540px; left: 380px; text-align: right; }
+  .photo { position: absolute; right: 190px; top: 14px; height: 450px; z-index: 1; }
+  .photo-glow { position: absolute; right: 120px; top: 40px; width: 440px; height: 440px; border-radius: 50%; background: radial-gradient(circle, rgba(96,165,250,.28) 0%, rgba(96,165,250,0) 65%); z-index: 1; }
+  .eyebrow { font-family: var(--font); font-size: 17px; font-weight: 500; color: var(--glow);  }
+  h1 { font-size: 62px; font-weight: 700; line-height: 1.08; margin-top: 14px; letter-spacing: -.01em; }
+  h1 .accent { color: var(--glow); }
+  .value { font-size: 22px; font-weight: 400; color: rgba(248,250,252,.8); margin-top: 18px; line-height: 1.45; }
+  .cta { display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; border: 1.5px solid var(--ink-line); border-radius: var(--pill); padding: 8px 20px; font-size: 18px; font-weight: 500; color: var(--text-on-ink); }
+  .cta svg { width: 18px; height: 18px; color: var(--glow); }
+
+  .logo { position: absolute; top: 40px; left: 56px; height: 34px; }
+</style>
+</head>
+<body>
+<div class="cover" id="cover">
+  <img class="logo" src="../assets/logos/logo-light.svg" alt="mplifyAI">
+  <div class="photo-glow"></div>
+  <img class="photo" src="../assets/photos/dennis-arms.png" alt="Dennis Berchevsky">
+  <div class="copy">
+    <h1>לגדול בלי לגייס<br><span class="accent">עוד עובדים</span></h1>
+    <div class="value">אוטומציות ומערכות AI לסוכנויות ביטוח וחברות בצמיחה</div>
+    <span class="cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>קובעים שיחה בנעוצים</span>
+  </div>
+</div>
+</body>
+</html>

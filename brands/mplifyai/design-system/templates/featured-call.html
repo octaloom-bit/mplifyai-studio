@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Dennis featured · book a call</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #444; padding: 40px; font-family: var(--font); }
+
+  /* LinkedIn Featured link thumbnail: 1200x627 (1.91:1).
+     Render: python3 render.py cover templates/featured-call.html out/featured-call */
+  .card { width: 1200px; height: 627px; position: relative; overflow: hidden; background: var(--ink); color: var(--text-on-ink); direction: rtl; }
+  .card::before { content: ""; position: absolute; inset: 0; background-image: var(--grid); background-size: 44px 44px; }
+  .card::after { content: ""; position: absolute; width: 900px; height: 700px; right: -150px; top: -200px; background: var(--glow-radial); }
+  .card > * { position: relative; z-index: 1; }
+
+  .photo-glow { position: absolute; right: -40px; top: 110px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(96,165,250,.26) 0%, rgba(96,165,250,0) 65%); }
+  .photo { position: absolute; right: -95px; bottom: -225px; height: 760px; }
+
+  .copy { position: absolute; top: 108px; left: 56px; width: 500px; text-align: right; }
+  .eyebrow { font-size: 22px; font-weight: 500; color: var(--glow); }
+  h1 { font-size: 58px; font-weight: 700; line-height: 1.1; margin-top: 16px; letter-spacing: -.01em; }
+  h1 .accent { color: var(--glow); }
+  .value { font-size: 23px; font-weight: 400; color: rgba(248,250,252,.82); margin-top: 22px; line-height: 1.5; }
+  .cta { display: inline-flex; align-items: center; gap: 12px; margin-top: 34px; background: var(--glow); color: var(--ink); border-radius: var(--pill); padding: 14px 30px; font-size: 24px; font-weight: 700; }
+
+  .logo { position: absolute; top: 40px; left: 48px; height: 32px; }
+</style>
+</head>
+<body>
+<div class="card" id="cover">
+  <img class="logo" src="../assets/logos/logo-light.svg" alt="mplifyAI">
+  <div class="photo-glow"></div>
+  <img class="photo" src="../assets/photos/dennis-point.png" alt="Dennis Berchevsky">
+  <div class="copy">
+    <div class="eyebrow">שיחת התאמה, בלי עלות</div>
+    <h1>יש לך תהליך<br><span class="accent">שתוקע את הצוות?</span></h1>
+    <div class="value">שיחה אחת, ונבין יחד<br>אם מערכת AI נכונה לעסק שלך עכשיו</div>
+    <span class="cta">לקביעת שיחה ←</span>
+  </div>
+</div>
+</body>
+</html>

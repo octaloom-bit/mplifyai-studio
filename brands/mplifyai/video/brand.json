@@ -1,0 +1,29 @@
+{
+  "name": "mplifyAI",
+  "colors": {
+    "ink": "#090E1A",
+    "blue": "#2463EB",
+    "glow": "#61A6FA",
+    "paper": "#F8FAFC",
+    "navy": "#090E1A"
+  },
+  "caption": {
+    "font_family": "IBM Plex Sans Hebrew",
+    "font_file": "fonts/IBMPlexSansHebrew-Bold.woff2",
+    "font_weight": 700,
+    "font_size": 60,
+    "text": "#F8FAFC",
+    "keyword": "#61A6FA",
+    "box": "rgba(9,14,26,0.86)",
+    "radius": 18,
+    "dim_opacity": 0.32
+  },
+  "effects_heb_font": "plexhebrew",
+  "effects_colors": {
+    "hook_word": "2463EB",
+    "strike_text": "090E1A",
+    "strike_line": "2463EB"
+  },
+  "outro": null,
+  "grade": "null"
+}
