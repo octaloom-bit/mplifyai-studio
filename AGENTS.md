@@ -26,7 +26,7 @@ Hard rules, always:
 - **No edit before an approved storyboard** (a note `kind: "approve", stage: "storyboard"`).
 - **Every word on screen is heard at that moment.** Captions = the exact spoken words. Effect text only while it is being said. Unclear audio → cut the phrase, never guess.
 - **Never invent** results, clients, numbers. Respect every ⚠️ in `brands/<brand>/voice/04-story-bank.md`.
-- **Voice files first.** If `brands/<brand>/voice/` is missing, stop and tell the human: put `mplifyai-private.zip` in the Studio folder and run `npm run setup`. Never write a script without them.
+- **Voice files first.** If `brands/<brand>/voice/` is missing, stop and tell the human: download the `mplifyai-private` folder from their Drive into Downloads (a zip is fine) and run `npm run setup`. Never write a script without them.
 - `projects/sabba/` is the worked example (a finished 2-episode series with storyboards, notes and versions). Learn from it; leave its `in-progress` request alone.
 - **Self-QA before every delivery** (section QA). The human should never be the first to find a clipped word.
 

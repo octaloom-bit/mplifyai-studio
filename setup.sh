@@ -10,10 +10,17 @@ R="$(pwd)"; E="$R/vendor/effects"
 command -v ffmpeg >/dev/null || { echo "NEED_FFMPEG: Mac: brew install ffmpeg  ·  Windows: winget install ffmpeg"; exit 1; }
 command -v node >/dev/null || { echo "NEED_NODE: install Node.js 18+ from nodejs.org"; exit 1; }
 
-# private pack (voice files, photos, example projects): a zip next to this file or in Downloads
-PACK="$(ls "$R"/*private*.zip "$HOME"/Downloads/*private*.zip 2>/dev/null | head -1 || true)"
-if [ -n "$PACK" ]; then unzip -oq "$PACK" -d "$R" -x "__MACOSX/*" && echo "0/6 private pack unpacked ($(basename "$PACK"))"
-elif [ ! -d "$R/brands/mplifyai/voice" ]; then echo "0/6 NOTE: private pack not found (put mplifyai-private.zip in this folder and run again)"; fi
+# private pack (voice files, photos, example projects): a zip or a folder named mplifyai-private*,
+# next to this file or in Downloads (a Drive folder download arrives as a zip). Never overwrites your files.
+PACK="$(ls -d "$R"/*private*.zip "$R"/mplifyai-private* "$HOME"/Downloads/*private*.zip "$HOME"/Downloads/mplifyai-private* 2>/dev/null | head -1 || true)"
+if [ -n "$PACK" ]; then
+  SRC="$PACK"; TMP=""
+  case "$PACK" in *.zip) TMP="$(mktemp -d)"; unzip -oq "$PACK" -d "$TMP" -x "__MACOSX/*"; SRC="$TMP";; esac
+  TOP="$(dirname "$(find "$SRC" -maxdepth 3 -type d -name brands | head -1)")"
+  if [ -d "$TOP/brands" ]; then rsync -a --ignore-existing --exclude .DS_Store "$TOP/" "$R/" && echo "0/6 private pack ready ($(basename "$PACK"))"; fi
+  if [ -n "$TMP" ]; then rm -rf "$TMP"; fi
+fi
+[ -d "$R/brands/mplifyai/voice" ] || echo "0/6 NOTE: private pack not found. Put the mplifyai-private folder (or its zip) in Downloads and run again."
 
 echo "1/6 effects engine"
 git submodule update --init --recursive -q
